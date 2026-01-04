@@ -73,6 +73,8 @@ extension HeterogeneousKey: Identifiable where Key: Hashable {
 extension HeterogeneousKey: Sendable where Key: Sendable {}
 
 // MARK: Key == ObjectIdentifier
+public typealias TypeKey<T> = HeterogeneousKey<ObjectIdentifier, T>
+
 public extension HeterogeneousKey where Key == ObjectIdentifier {
     static func typed(_ type: Value.Type) -> Self {
         .init(ObjectIdentifier(type), type)
