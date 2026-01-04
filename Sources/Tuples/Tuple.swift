@@ -48,10 +48,10 @@ extension Tuple: MutableHeterogeneousCollection {
         try array.fetch(key)
     }
 
-    public mutating func registerOrUpdate<Value>(_ element: Value, on key: HeterogeneousKey<Int, Value>) {
+    public mutating func registerOrUpdate<Value>(_ element: Value, for key: HeterogeneousKey<Int, Value>) {
         guard Self.canStore(Value.self, in: key.data) else { return }
 
-        array.registerOrUpdate(element, on: key)
+        array.registerOrUpdate(element, for: key)
     }
 
     public subscript<Value>(_ type: Value.Type, key: Int) -> Value? {
@@ -59,6 +59,6 @@ extension Tuple: MutableHeterogeneousCollection {
         set {
             guard let newValue else { return }
 
-            registerOrUpdate(newValue, on: .init(key, type)) }
+            registerOrUpdate(newValue, for: .init(key, type)) }
     }
 }
