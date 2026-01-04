@@ -5,6 +5,8 @@
 //  Created by Martônio Júnior on 18/12/2025.
 //
 
+public typealias HArray = HeterogeneousArray
+
 public struct HeterogeneousArray {
     // MARK: Variables
     var collection: [Any]
@@ -29,7 +31,7 @@ extension HeterogeneousArray: ExpressibleByArrayLiteral {
 
 // MARK: Self: MutableHeterogeneousArray
 extension HeterogeneousArray: MutableHeterogeneousCollection {
-    public mutating func registerOrUpdate<Value>(_ element: Value, on key: HeterogeneousKey<Int, Value>) {
+    public mutating func registerOrUpdate<Value>(_ element: Value, for key: HeterogeneousKey<Int, Value>) {
         collection[key.data] = element
     }
 

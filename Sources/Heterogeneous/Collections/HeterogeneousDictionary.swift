@@ -12,11 +12,6 @@ public struct HeterogeneousDictionary<Key: Hashable> {
     // MARK: Variables
     var collection: [Key: Any]
 
-    // MARK: Subscripts
-    subscript<T>(dynamicMember member: String) -> T? where Key == String {
-        collection[member] as? T
-    }
-
     // MARK: Initializers
     public init(_ collection: [Key: Any]) {
         self.collection = collection
@@ -73,19 +68,18 @@ extension HeterogeneousDictionary: MutableHeterogeneousCollection {
 
     public mutating func registerOrUpdate<Value>(
         _ element: Value,
-        on key: HeterogeneousKey<Key, Value>
+        for key: HeterogeneousKey<Key, Value>
     ) {
         collection[key.data] = element
     }
 }
 
 // MARK: Key == ObjectIdentifier
-/// (4, "goal", 2.5)
 public extension HeterogeneousDictionary where Key == ObjectIdentifier {
     init<each Value>(_ values: repeat each Value) {
         self.init([:])
         for element in repeat each values {
-            self.registerOrUpdate(element, on: .typed(type(of: element)))
+            self.registerOrUpdate(element, for: .typed(type(of: element)))
         }
     }
 
@@ -94,6 +88,9 @@ public extension HeterogeneousDictionary where Key == ObjectIdentifier {
     }
 
     mutating func registerOrUpdate<Value>(_ value: Value) {
-        registerOrUpdate(value, on: .typed(Value.self))
+        registerOrUpdate(value, for: .typed(Value.self))
     }
 }
+
+// MARK: Key == String
+public typealias Blackboard = HeterogeneousDictionary<String>
